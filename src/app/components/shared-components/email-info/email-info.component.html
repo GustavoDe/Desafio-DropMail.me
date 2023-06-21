@@ -1,0 +1,33 @@
+<div class="w-full flex justify-center ">
+  <div class="email-container ">
+    <small class="text-neutral-500">Your temporary email address</small>
+    <div class="flex align-center">
+      <div class="email-info font-bold text-gray-600 flex items-center gap-[8px] border-[1px] border-r-0 p-[10px] rounded-none rounded-l-lg">
+        <p>{{email}}</p>
+      </div>
+      <button class="email-copy-icon text-gray-600 flex items-center gap-[8px] border-[1px] p-[10px] rounded-none rounded-r-lg" (click)="copyToClipboard()">
+        <i [class]="iconCopy"></i>
+        <span class="text-[16px] ">{{textCopy}}</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container-time w-full flex justify-center mt-[1rem]">
+  <div class="timer flex items-center gap-[8px]">
+    <small>Autorefresh in</small>
+    <div class="rounded-full border-[1px] w-[22px] h-[22px] flex items-center justify-center ">
+      <span class="text-[12px]">
+        {{countdown}}
+      </span>
+    </div>
+    <div class="button-group flex items-center gap-[5px]">
+      <button class="border-[1px] rounded-full w-[22px] h-[22px] flex items-center justify-center" (click)="sendEvent(); countdown = 15">
+        <i class="fa-solid fa-rotate-right"></i>
+      </button>
+      <span class="text-[14px]">Refresh</span>
+    </div>
+
+  </div>
+
+</div>

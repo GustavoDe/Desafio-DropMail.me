@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'dropmail.me-challenge';
+
+
+  updateEmail(){
+    console.log("atualizar email")
+  }
+
 }
