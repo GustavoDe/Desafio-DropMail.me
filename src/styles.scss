@@ -5,3 +5,11 @@
 body{
   padding: 10px;
 }
+
+.single-line-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  height: auto;
+}

@@ -1,11 +1,28 @@
 <header class="border-[1px] p-[10px] rounded-[10px] rounded-b-none">
   <app-email-info (reloadEmail)="updateEmail()"  [email]="'gustavolisboa798@gmail.com'"></app-email-info>
 </header>
-<main class="border-[1px] px-[10px] rounded-[10px] rounded-t-none grid grid-cols-3">
+<main class="border-[1px] rounded-[10px] rounded-t-none grid grid-cols-3">
+
   <section class="cols-span-2 border-r">
-    <h3>Inbox</h3>
+    <header class="border-b-[1px] p-[10px]">
+      <h2 class="font-bold">Inbox</h2>
+    </header>
+
+    <aside>
+      <ng-container *ngFor="let email of emails; let i = index">
+        <app-email-list
+        (emailSelected)="handleEmailSelected($event)"
+        [isSelected]="selectedItem === email.id"
+        (click)="selectItem(email.id)"
+        [email]="email"
+        >
+      </app-email-list>
+      </ng-container>
+    </aside>
+
   </section>
   <section>
-    2
+    <header class="border-b-[1px] p-[10px]">
+    </header>
   </section>
 </main>
