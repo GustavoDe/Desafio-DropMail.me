@@ -10,6 +10,8 @@ export class EmailInfoComponent implements OnInit {
   @Input() email!: string
   @Input() countdown: number = 15;
   @Output() reloadEmail = new EventEmitter();
+  @Output() generateEmail = new EventEmitter();
+
   borderSize: string = '';
   borderColor: string = '';
   iconCopy = 'fa-solid fa-copy'
@@ -38,6 +40,10 @@ export class EmailInfoComponent implements OnInit {
 
   sendEvent() {
     this.reloadEmail.emit();
+  }
+
+  generateNewEmail(){
+    this.generateEmail.emit();
   }
 
   copyToClipboard() {

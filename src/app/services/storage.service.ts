@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
+import { Mail } from '../types/mail';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
+  public emails: Mail[] = []
 
   getItem(key: string): any {
     const item = localStorage.getItem(key);

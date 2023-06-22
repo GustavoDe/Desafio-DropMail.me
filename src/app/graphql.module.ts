@@ -3,7 +3,7 @@ import { HttpLink } from 'apollo-angular/http';
 import { NgModule } from '@angular/core';
 import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
 
-const uri = 'https://dropmail.me/api/graphql/challenge'; // <-- add the URL of the GraphQL server here
+const uri = 'https://cors-anywhere.herokuapp.com/https://dropmail.me/api/graphql/gustavodev'; // <-- add the URL of the GraphQL server here
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   return {
     link: httpLink.create({ uri }),
