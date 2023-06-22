@@ -1,5 +1,5 @@
 <header class="border-[1px] p-[10px] rounded-[10px] rounded-b-none">
-  <app-email-info (reloadEmail)="updateEmail()"  [email]="'gustavolisboa798@gmail.com'"></app-email-info>
+  <app-email-info (reloadEmail)="updateEmail()"  [email]="emailActive"></app-email-info>
 </header>
 <main class="border-[1px] rounded-[10px] rounded-t-none grid grid-cols-3">
 
@@ -9,15 +9,21 @@
     </header>
 
     <aside class="overflow-y-auto  h-[400px]">
-      <ng-container *ngFor="let email of emails; let i = index">
-        <app-email-list
-        (emailSelected)="handleEmailSelected($event)"
-        [isSelected]="selectedItem === email.id"
-        (click)="selectItem(email.id)"
-        [email]="email"
-        >
-      </app-email-list>
+      <ng-container *ngIf="emails.length > 0; else noEmails">
+        <ng-container *ngFor="let email of emails; let i = index">
+          <app-email-list
+          (emailSelected)="handleEmailSelected($event)"
+          [isSelected]="selectedItem === email.id"
+          (click)="selectItem(email.id)"
+          [email]="email"
+          >
+        </app-email-list>
+        </ng-container>
       </ng-container>
+      <ng-template #noEmails>
+        <h3 class="p-[10px]">No email found</h3>
+      </ng-template>
+
     </aside>
 
   </section>

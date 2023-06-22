@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/
 import { EmailListComponent } from './components/shared-components/email-list/email-list.component';
 import { StorageService } from './services/storage.service';
 import { NotificationService } from './services/notification-service.service';
+import { Apollo, gql } from 'apollo-angular';
+import { IntroduceSession } from './types/introduceSession';
 
 @Component({
   selector: 'app-root',
@@ -15,43 +17,95 @@ export class AppComponent implements OnInit, OnDestroy {
   selectedItem: number | null = null;
   selectedEmail: any
 
-  emails = [
-    {
-      id: 1,
-      title: "Seu novo carro está aqui",
-      subject: "Sonho de consumo",
-      content: "seu novo carro está na localiza, você pode alugar ou até mesmo comprar seu carro 0km ou seminovo. Se interessou? Entre em contato com (11) 96999-9999"
-    },
-    {
-      id: 2,
-      title: "Rai",
-      subject: "Rai te mandou uma nova mensagem",
-      content: "Olá bom dia, vi seu perfil no linkedin e achei muito interessante. Podemos agendar uma reunião?"
-    },
-    {
-      id: 3,
-      title: "Front Revisão1905 Movido para doing",
-      subject: "Projeto marilia barreto",
-      content: "Para saber mais clique aqui"
-    }
-  ]
+  emailActive: string = ''
+  id_email: string = ''
+
+  emails: any[] = []
   unread_emails: number = 0
   emails_read: any = []
 
   constructor(
     private StorageService: StorageService,
-    private NotificationService: NotificationService
+    private NotificationService: NotificationService,
+    private apollo: Apollo
   ) { }
 
+
+
   ngOnInit(): void {
-    this.selectItem(this.emails[0].id)
-    this.selectedEmail = this.emails[0]
-    console.log(this.selectedEmail)
-    this.emails_read = this.StorageService.getItem("emails_read") || []
-    this.unread_emails = this.emails.length - this.emails_read.length
-    console.log("não lidos", this.unread_emails)
+    this.generateNewEmail()
+    /*  this.selectItem(this.emails[0].id)
+     this.selectedEmail = this.emails[0]
+     console.log(this.selectedEmail)
+     this.emails_read = this.StorageService.getItem("emails_read") || []
+     this.unread_emails = this.emails.length - this.emails_read.length
+     console.log("não lidos", this.unread_emails) */
     document.addEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
 
+  }
+
+  generateNewEmail() {
+    this.apollo
+      .mutate({
+        mutation: gql`
+        mutation {
+          introduceSession {
+              id,
+              expiresAt,
+              addresses {
+                address
+              }
+          }
+      }
+
+        `,
+      })
+      .subscribe((result: any) => {
+        const email: IntroduceSession = result.data.introduceSession;
+        console.log(this.formatarData(new Date(email.expiresAt)))
+        this.emailActive = email.addresses[0].address
+        this.id_email = email.id
+        console.log(this.emailActive)
+      });
+  }
+
+  formatarData(data: any) {
+    const dia = String(data.getDate()).padStart(2, '0');
+    const mes = String(data.getMonth() + 1).padStart(2, '0');
+    const ano = data.getFullYear();
+    const hora = String(data.getHours()).padStart(2, '0');
+    const minutos = String(data.getMinutes()).padStart(2, '0');
+
+    return `${dia}/${mes}/${ano} ${hora}:${minutos}`;
+  }
+
+
+  updatedEmails() {
+    console.log(this.id_email)
+    this.apollo
+      .query({
+        query: gql`
+        query {
+          session(id: "U2Vzc2lvbjrkF7DXpoFLdbY6DHDGPdKp") {
+            mails {
+              rawSize
+              fromAddr
+              toAddr
+              downloadUrl
+              text
+              headerSubject
+            }
+          }
+        }
+
+
+        `,
+      })
+      .subscribe((result: any) => {
+        this.emails = result.data.session.mails
+        console.log(result)
+      },
+        (err) => console.log(err));
   }
 
   ngOnDestroy() {
@@ -68,7 +122,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   updateEmail() {
-    console.log("atualizar email")
+    this.updatedEmails()
   }
 
   selectItem(index: number) {
