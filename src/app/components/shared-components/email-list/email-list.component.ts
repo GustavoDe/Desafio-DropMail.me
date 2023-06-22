@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { StorageService } from 'src/app/services/storage.service';
+import { Mail } from 'src/app/types/mail';
 
 @Component({
   selector: 'app-email-list',
@@ -20,7 +21,7 @@ export class EmailListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.storageKey = 'emailItem_' + this.email.id;
+  /*   this.storageKey = 'emailItem_' + this.email.id; */
     this.isClickedBefore = this.StorageService.getItem(this.storageKey) || false;
   }
 
@@ -32,6 +33,7 @@ export class EmailListComponent implements OnInit {
     this.emailSelected.emit(this.email);
     this.isSelected = !this.isSelected;
     this.isClickedBefore = true;
+    console.log(this.email)
     this.StorageService.setItem(this.storageKey, true);
     // Lógica adicional que você queira executar ao clicar no item
   }

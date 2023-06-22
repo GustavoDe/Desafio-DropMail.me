@@ -1,5 +1,5 @@
 <header class="border-[1px] p-[10px] rounded-[10px] rounded-b-none">
-  <app-email-info (reloadEmail)="updateEmail()"  [email]="emailActive"></app-email-info>
+  <app-email-info (reloadEmail)="updateEmail()" (generateEmail)="generateNewEmail()" [email]="emailActive"></app-email-info>
 </header>
 <main class="border-[1px] rounded-[10px] rounded-t-none grid grid-cols-3">
 
@@ -21,7 +21,7 @@
         </ng-container>
       </ng-container>
       <ng-template #noEmails>
-        <h3 class="p-[10px]">No email found</h3>
+        <h3 class="p-[10px]">There are no emails to show...</h3>
       </ng-template>
 
     </aside>
@@ -29,10 +29,36 @@
   </section>
 
   <section class="col-span-2">
-    <header class="border-b-[1px] p-[10px]">
-      <small>Send by: {{selectedEmail.fromAddr}}</small>
-    </header>
+    <ng-container *ngIf="emails.length > 0; else emailNone">
+      <header class="border-b-[1px] p-[10px] flex justify-between items-center">
+        <small>Send by: {{selectedEmail.fromAddr}}</small>
+        <ng-container *ngIf="permissionNotification == false; else permissionAccept ">
+          <button class="border p-[10px] rounded-[10px] bg-[#006eff] text-[#fff] transition-all duration-300 hover:scale-[1.02]" (click)="requestPermissionNotification()"><i class="fa-solid fa-bell"></i> Enable notifications for new emails</button>
+        </ng-container>
+        <ng-template #permissionAccept>
+         <small><i class="fa-solid fa-check"></i> Your notification for new emails is turned on</small>
+        </ng-template>
+      </header>
 
-    <app-box-email [email]="selectedEmail"></app-box-email>
+      <app-box-email [email]="selectedEmail"></app-box-email>
+    </ng-container>
+    <ng-template #emailNone>
+      <div class="w-full h-full flex justify-center items-center">
+        <div class="flex flex-col items-center gap-[10px]">
+          <p>
+            The mailbox <strong>{{emailActive}}</strong>  is currently empty.
+          </p>
+          <ng-container *ngIf="permissionNotification == false; else permissionAccept ">
+            <button class="border p-[10px] rounded-[10px] bg-[#006eff] text-[#fff] transition-all duration-300 hover:scale-[1.02]" (click)="requestPermissionNotification()"><i class="fa-solid fa-bell"></i> Enable notifications for new emails</button>
+          </ng-container>
+          <ng-template #permissionAccept>
+           <small><i class="fa-solid fa-check"></i> Your notification for new emails is turned on</small>
+          </ng-template>
+        </div>
+
+      </div>
+
+    </ng-template>
+
   </section>
 </main>
