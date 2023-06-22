@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Mail } from 'src/app/types/mail';
 
 @Component({
   selector: 'app-box-email',
@@ -7,5 +8,5 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BoxEmailComponent {
-  @Input() email: any;
+  @Input() email!: Mail;
 }
