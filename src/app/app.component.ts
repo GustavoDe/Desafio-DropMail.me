@@ -86,7 +86,7 @@ export class AppComponent implements OnInit, OnDestroy {
       .query({
         query: gql`
         query {
-          session(id: "U2Vzc2lvbjrkF7DXpoFLdbY6DHDGPdKp") {
+          session(id: "${this.id_email}") {
             mails {
               rawSize
               fromAddr
