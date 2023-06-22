@@ -3,12 +3,12 @@
 </header>
 <main class="border-[1px] rounded-[10px] rounded-t-none grid grid-cols-3">
 
-  <section class="cols-span-2 border-r">
+  <section class="col-span-1 border-r ">
     <header class="border-b-[1px] p-[10px]">
       <h2 class="font-bold">Inbox</h2>
     </header>
 
-    <aside>
+    <aside class="overflow-y-auto  h-[400px]">
       <ng-container *ngFor="let email of emails; let i = index">
         <app-email-list
         (emailSelected)="handleEmailSelected($event)"
@@ -21,8 +21,12 @@
     </aside>
 
   </section>
-  <section>
+
+  <section class="col-span-2">
     <header class="border-b-[1px] p-[10px]">
+      <small>Send by: {{selectedEmail.fromAddr}}</small>
     </header>
+
+    <app-box-email [email]="selectedEmail"></app-box-email>
   </section>
 </main>
