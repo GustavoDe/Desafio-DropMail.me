@@ -1,5 +1,5 @@
 <header class="border-[1px] p-[10px] rounded-[10px] rounded-b-none">
-  <app-email-info (reloadEmail)="updateEmail()" (generateEmail)="generateNewEmail()" [email]="emailActive"></app-email-info>
+  <app-email-info (reloadEmail)="updateEmail()" (generateEmail)="generateNewEmail()" [email]="emailAddress"></app-email-info>
 </header>
 <main class="border-[1px] rounded-[10px] rounded-t-none grid md:grid-cols-3">
 
@@ -46,7 +46,7 @@
       <div class="w-full h-full flex justify-center items-center">
         <div class="flex flex-col items-center gap-[10px]">
           <p>
-            The mailbox <strong>{{emailActive}}</strong>  is currently empty.
+            The mailbox <strong>{{emailAddress}}</strong>  is currently empty.
           </p>
           <ng-container *ngIf="permissionNotification == false; else permissionAccept ">
             <button class="border p-[10px] rounded-[10px] bg-[#006eff] text-[#fff] transition-all duration-300 hover:scale-[1.02]" (click)="requestPermissionNotification()"><i class="fa-solid fa-bell"></i> Enable notifications for new emails</button>
