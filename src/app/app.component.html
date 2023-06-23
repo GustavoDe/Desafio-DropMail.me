@@ -30,7 +30,7 @@
   <hr class="flex-fill md:hidden block">
   <section class="md:p-0 p-[10px] md:col-span-2">
     <ng-container *ngIf="emails.length > 0; else emailNone">
-      <header class="border-b-[1px] p-[10px] flex justify-between items-center">
+      <header class="border-b-[1px] p-[10px] flex md:justify-between md:flex-row flex-col gap-[10px] md:gap-0 items-center">
         <small>Send by: {{selectedEmail.fromAddr}}</small>
         <ng-container *ngIf="permissionNotification == false; else permissionAccept ">
           <button class="border p-[10px] rounded-[10px] bg-[#006eff] text-[#fff] transition-all duration-300 hover:scale-[1.02]" (click)="requestPermissionNotification()"><i class="fa-solid fa-bell"></i> Enable notifications for new emails</button>
