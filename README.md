@@ -1,27 +1,42 @@
-# DropmailMeChallenge
+# Dropmail Challenge
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.3.
+## Descrição do Projeto
+O E-mail temporário é uma solução pensada para previnir seu email pessoal de hackers ou spam, além disso esses emails te permitem obter mais segurança e privacidade.
 
-## Development server
+![image](https://github.com/GustavoDe/Desafio-DropMail.me/assets/81787503/f0495c64-0e70-406e-960b-f49c169ac90c)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Tecnologias utilizadas
+* Angular
+* Tailwind
+* GraphQl
+* Apollo Client
 
-## Code scaffolding
+## Iniciar projeto
+Estas instruções vão possibilitar a cópia do projeto em sua máquina local, para desenvolvimento e teste.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### O que você precisa ter instalado em sua máquina
+- Node 16+
+- Npm
+- Git 
+- Docker
+  
+### Clone o repositório atráves de SSH ou HTTPS
+SSH: `git clone git@github.com:GustavoDe/Desafio-DropMail.me.git`
 
-## Build
+HTTPS: `git clone https://github.com/GustavoDe/Desafio-DropMail.me.git`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Rodando o projeto sem docker
+1. Instale todas as dependências utilizando `npm i`
+2. Inicie o servidor do projeto, com `ng serve -o`
 
-## Running unit tests
+### Rodando o projeto com docker
+1. Abra o projeto em seu terminal
+2. Execute o comando `docker build -t dropmail-challenge .`
+3. Ao finalizar, execute `docker run -p 80:80 dropmail-challenge`
+4. Agora entre no seu navegador e coloque `localhost:80`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Link do projeto publicado: [DropMail Challenge](https://desafio-drop-mail-gswo0cins-control-system.vercel.app/)
 
-## Running end-to-end tests
+[Vídeo Apresentação](https://www.loom.com/embed/a2de73fc06384ce18b95ef42d87da032)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+> This is a challenge by [Coodesh](https://coodesh.com/)
