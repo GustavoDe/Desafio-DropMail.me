@@ -1,14 +1,14 @@
 <header class="border-[1px] p-[10px] rounded-[10px] rounded-b-none">
-  <app-email-info (reloadEmail)="updateEmail()" (generateEmail)="generateNewEmail()" [email]="emailActive"></app-email-info>
+  <app-email-info (reloadEmail)="updateEmail()" (generateEmail)="generateNewEmail()" [email]="emailAddress"></app-email-info>
 </header>
-<main class="border-[1px] rounded-[10px] rounded-t-none grid grid-cols-3">
+<main class="border-[1px] rounded-[10px] rounded-t-none grid md:grid-cols-3">
 
-  <section class="col-span-1 border-r ">
+  <section class="md:col-span-1 border-r ">
     <header class="border-b-[1px] p-[10px]">
       <h2 class="font-bold">Inbox</h2>
     </header>
 
-    <aside class="overflow-y-auto  h-[400px]">
+    <aside class="overflow-y-auto h-[100px]  md:h-[400px]">
       <ng-container *ngIf="emails.length > 0; else noEmails">
         <ng-container *ngFor="let email of emails; let i = index">
           <app-email-list
@@ -27,10 +27,10 @@
     </aside>
 
   </section>
-
-  <section class="col-span-2">
+  <hr class="flex-fill md:hidden block">
+  <section class="md:p-0 p-[10px] md:col-span-2">
     <ng-container *ngIf="emails.length > 0; else emailNone">
-      <header class="border-b-[1px] p-[10px] flex justify-between items-center">
+      <header class="border-b-[1px] p-[10px] flex md:justify-between md:flex-row flex-col gap-[10px] md:gap-0 items-center">
         <small>Send by: {{selectedEmail.fromAddr}}</small>
         <ng-container *ngIf="permissionNotification == false; else permissionAccept ">
           <button class="border p-[10px] rounded-[10px] bg-[#006eff] text-[#fff] transition-all duration-300 hover:scale-[1.02]" (click)="requestPermissionNotification()"><i class="fa-solid fa-bell"></i> Enable notifications for new emails</button>
@@ -46,7 +46,7 @@
       <div class="w-full h-full flex justify-center items-center">
         <div class="flex flex-col items-center gap-[10px]">
           <p>
-            The mailbox <strong>{{emailActive}}</strong>  is currently empty.
+            The mailbox <strong>{{emailAddress}}</strong>  is currently empty.
           </p>
           <ng-container *ngIf="permissionNotification == false; else permissionAccept ">
             <button class="border p-[10px] rounded-[10px] bg-[#006eff] text-[#fff] transition-all duration-300 hover:scale-[1.02]" (click)="requestPermissionNotification()"><i class="fa-solid fa-bell"></i> Enable notifications for new emails</button>

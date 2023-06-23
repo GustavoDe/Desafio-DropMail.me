@@ -17,9 +17,10 @@ export class AppComponent implements OnInit {
   title = 'dropmail.me-challenge';
   selectedItem: string | null = null;
   selectedEmail!: Mail
-  emailActive: string = ''
+  emailAddress: string = ''
   id_email: string = ''
   emails: Mail[] = []
+  emailActive!: IntroduceSession
   unread_emails: number = 0
   emails_read: any = [];
   previousQtdeEmails: number = 0
@@ -39,15 +40,15 @@ export class AppComponent implements OnInit {
   }
 
   getEmail() {
-    let email_active = this.StorageService.getItem("email_active");
-    if (email_active == null) {
+    this.emailActive = this.StorageService.getItem("emailActive");
+    if (this.emailActive == null) {
       this.generateNewEmail()
     } else {
-      if (this.checkEmailExpireyDate(email_active.expiresAt) == false) {
+      if (this.checkEmailExpireyDate(this.emailActive.expiresAt) == false) {
         this.generateNewEmail()
       } else {
-        this.emailActive = email_active.addresses[0].address
-        this.id_email = email_active.id
+        this.emailAddress = this.emailActive.addresses[0].address
+        this.id_email = this.emailActive.id
 
         this.updatedEmails()
       }
@@ -72,23 +73,14 @@ export class AppComponent implements OnInit {
       })
       .subscribe((result: any) => {
         const email: IntroduceSession = result.data.introduceSession;
-        this.StorageService.setItem("email_active", email);
-        this.emailActive = email.addresses[0].address
+        this.StorageService.setItem("emailActive", email);
+        this.emailActive = email;
+        this.emailAddress = email.addresses[0].address
         this.id_email = email.id
         this.updatedEmails()
-        console.log("email.ativo", this.emailActive)
+        console.log("email.ativo", this.emailAddress)
 
       });
-  }
-
-  formatDate(data: any) {
-    const dia = String(data.getDate()).padStart(2, '0');
-    const mes = String(data.getMonth() + 1).padStart(2, '0');
-    const ano = data.getFullYear();
-    const hora = String(data.getHours()).padStart(2, '0');
-    const minutos = String(data.getMinutes()).padStart(2, '0');
-
-    return `${dia}/${mes}/${ano} ${hora}:${minutos}`;
   }
 
   checkEmailExpireyDate(date: any): boolean {
@@ -115,10 +107,11 @@ export class AppComponent implements OnInit {
 
   requestPermissionNotification(){
     Notification.requestPermission().then((permission: string) => {
+      console.log("entrou aqui")
       if (permission === 'granted') {
         this.permissionNotification = true;
       } else {
-        this.permissionNotification = true;
+        this.permissionNotification = false;
       }
 
     }).catch((error) => {
@@ -128,7 +121,10 @@ export class AppComponent implements OnInit {
 
 
   updatedEmails() {
-    this.apollo
+    if(this.checkEmailExpireyDate(this.emailActive.expiresAt) == false){
+      this.generateNewEmail()
+    } else{
+      this.apollo
       .query({
         query: gql`
         query {
@@ -165,6 +161,8 @@ export class AppComponent implements OnInit {
 
       },
         (err) => console.log(err));
+    }
+
   }
 
   handleVisibilityChange() {
