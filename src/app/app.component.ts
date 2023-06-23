@@ -118,7 +118,7 @@ export class AppComponent implements OnInit {
       if (permission === 'granted') {
         this.permissionNotification = true;
       } else {
-        this.permissionNotification = true;
+        this.permissionNotification = false;
       }
 
     }).catch((error) => {
